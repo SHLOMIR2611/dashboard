@@ -4,7 +4,7 @@ Usage: guests_bake.py <index.html> <qualifications xlsx exported with NO status 
 Splits people who did the guest training by their current Datwise status:
   אורח/ת  -> real guests (g)
   פעיל/ה  -> candidates who were hired (h)
-  other   -> no longer active (x)
+  other   -> also counted as guests (g), with their status (v332)
 No ID numbers or phone numbers are written to the page."""
 import sys, re, json, datetime, openpyxl
 html, xlsx, asof = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -26,9 +26,9 @@ for r in best.values():
     name = (c(r, 'שם פרטי') + ' ' + c(r, 'שם משפחה')).strip()
     base = [name, c(r, 'חברת שירות / קבלן'), c(r, 'תאריך'), c(r, 'תאריך פקיעת תוקף'), c(r, 'סטטוס משתתף')]
     st = c(r, 'סטטוס')
-    if st == 'אורח/ת': G['g'].append(base)
+    if st == 'אורח/ת': G['g'].append(base + [st])
     elif st == 'פעיל/ה': G['h'].append(base + [c(r, 'חטיבה'), c(r, 'מחלקה'), c(r, 'מנהל/ת'), c(r, 'תאריך תחילת עבודה')])
-    else: G['x'].append(base + [st])
+    else: G['g'].append(base + [st])  # v332: not-active people count as guests
 for k in ('g', 'h', 'x'):
     G[k].sort(key=lambda a: d(a[2]) or datetime.datetime.min, reverse=True)
 s = open(html, encoding='utf-8').read()
