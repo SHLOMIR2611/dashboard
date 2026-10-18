@@ -8315,17 +8315,18 @@ var CAT_TIPS={
   function bind(h,fn){if(!h)return;
     h.addEventListener('mouseenter',function(){clearTimeout(timer);timer=setTimeout(function(){show(h,fn());},500);});
     h.addEventListener('mouseleave',hide);h.addEventListener('mousedown',hide);}
-  var liveCur=null;
-  function bindLive(sel,fn){
-    document.addEventListener('mouseover',function(e){
-      var el=e.target.closest&&e.target.closest(sel);
-      if(el===liveCur)return;
-      if(liveCur&&!el){liveCur=null;hide();return;}
-      if(!el)return;
-      liveCur=el;clearTimeout(timer);timer=setTimeout(function(){if(liveCur===el)show(el,fn());},500);
-    });
-    document.addEventListener('mousedown',function(){liveCur=null;},true);
-  }
+  var LIVE=[],liveCur=null;
+  function bindLive(sel,fn){LIVE.push([sel,fn]);}
+  document.addEventListener('mouseover',function(e){
+    if(!e.target.closest)return;
+    var el=null,fn=null;
+    for(var k=0;k<LIVE.length;k++){var x=e.target.closest(LIVE[k][0]);if(x){el=x;fn=LIVE[k][1];break;}}
+    if(el===liveCur)return;
+    if(liveCur){liveCur=null;hide();}
+    if(!el)return;
+    liveCur=el;clearTimeout(timer);timer=setTimeout(function(){if(liveCur===el)show(el,fn());},500);
+  });
+  document.addEventListener('mousedown',function(){liveCur=null;},true);
   function init(){bind(document.getElementById('dashTitle'),function(){return TXT;});
     var a=document.getElementById('amsIndicator');if(a){a.removeAttribute('title');bind(a,amsTxt);}
     bind(document.querySelector('#schedSideChildren [data-sched="weekly"]'),function(){return '<p><b>תכנון אוטומטי לפי נוכחות:</b> הדאשבורד מציע תוכנית לשבוע הקרוב, בין 10:00 ל-14:00, עד 2 הדרכות ביום.</p><p>סדר ההדרכות נקבע לפי מספר העובדים הנוכחים השבוע שחסרה להם כל הדרכה, מהגדול לקטן.</p><p>נושאים שלא נכנסו עוברים לשבוע הבא, ויש רשימה של מנהלים שנדרשת פעולתם השבוע.</p>';});
