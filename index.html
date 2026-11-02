@@ -433,6 +433,28 @@ table.simple tr:hover td{background:#faf7f4}
 .sidetab .tab-label{opacity:0;transition:opacity .3s;overflow:visible;white-space:nowrap}
 .sidebar:hover .sidetab .tab-label{opacity:1}
 
+/* B407: שאילתות — search field in the side menu + result tabs */
+#qGroup .side-children{max-height:none!important;overflow:visible}
+.q-side-search{padding:2px 10px 8px 10px;opacity:0;transition:opacity .3s}
+.sidebar:hover .q-side-search,.sidebar:focus-within .q-side-search{opacity:1}
+.q-side-search input{width:100%;box-sizing:border-box;font-family:inherit;font-size:13px;padding:8px 10px;border-radius:10px;border:1.5px solid rgba(15,139,140,.55);background:rgba(255,255,255,.92);color:#1d2b36;outline:none}
+.q-side-search input:focus{border-color:#0F8B8C;box-shadow:0 0 0 3px rgba(15,139,140,.18)}
+.q-side-sug{margin:0 10px 8px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.18);max-height:330px;overflow-y:auto;color:#1d2b36}
+.q-side-hd{font-size:11px;font-weight:800;color:#6b7684;padding:6px 10px 3px;background:#f4f6f8;position:sticky;top:0}
+.q-side-row{display:flex;gap:7px;align-items:flex-start;padding:6px 10px;cursor:pointer;border-bottom:1px solid #eef0f3;white-space:normal}
+.q-side-row:hover{background:rgba(15,139,140,.1)}
+.q-side-row .qi{font-size:15px;flex:none}
+.q-side-row .qt{display:flex;flex-direction:column;min-width:0;font-size:12.5px;line-height:1.3}
+.q-side-row .qt small{color:#6b7684;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar:focus-within{width:260px}
+.sidebar:focus-within .sidetab .tab-label,.sidebar:focus-within .sidebar-logo .text,.sidebar:focus-within .side-chev{opacity:1}
+.q-tabs{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;border-bottom:2px solid #0F8B8C;margin-bottom:14px;padding:0 2px}
+.q-tab{display:flex;align-items:center;gap:6px;max-width:260px;padding:8px 10px 8px 6px;border-radius:10px 10px 0 0;background:#eef1f4;color:#5b6573;cursor:pointer;font-weight:600;font-size:14px;border:1px solid #d9dee4;border-bottom:none}
+.q-tab.on{background:#0F8B8C;color:#fff;border-color:#0F8B8C}
+.q-tab .ql{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q-tab button{border:none;background:transparent;color:inherit;font-size:17px;line-height:1;cursor:pointer;padding:0 4px;border-radius:6px;opacity:.75}
+.q-tab button:hover{opacity:1;background:rgba(0,0,0,.12)}
+.q-tab-all{margin-inline-start:auto;font-family:inherit;font-size:12px;border:none;background:none;color:var(--muted);cursor:pointer;padding:6px}
 /* v325: collapsible sub-menu in the side menu */
 .side-group .side-parent{position:relative}
 .side-chev{margin-right:auto;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex:none;border-radius:50%;border:1.5px solid currentColor;background:rgba(255,255,255,.14);box-shadow:0 1px 4px rgba(0,0,0,.18);opacity:0;transition:opacity .3s,transform .25s,background .2s;color:inherit}
@@ -517,7 +539,7 @@ body.stats-empty .hero-band,body.avigail-on .hero-band{background:none;border:no
     <div style="flex-shrink:0;padding-left:8px;display:flex;flex-direction:column;align-items:stretch"><img src="data:image/jpeg;base64,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" alt="PCB Technologies" style="height:72px;width:auto"><button class="pro-btn" id="proBtn" onclick="togglePro()" title="הצג/הסתר תפריט Pro Performance"><span class="dot"></span>Pro Performance</button></div>
     <div class="titles" style="text-align:right;flex:1;padding-right:10px">
       <div style="font-size:15px;font-weight:800;letter-spacing:1px;color:#8b634b;font-family:Arial,sans-serif;margin-bottom:2px">Direct Operation &amp; Managment Performance</div>
-      <h1 id="dashTitle" style="font-size:23px;cursor:help" dir="rtl">דאשBורד מרכז בקרה בטיחות גהות חוסן מקצועי <span style="font-size:12px;font-weight:400;color:#999">(B406)</span></h1>
+      <h1 id="dashTitle" style="font-size:23px;cursor:help" dir="rtl">דאשBורד מרכז בקרה בטיחות גהות חוסן מקצועי <span style="font-size:12px;font-weight:400;color:#999">(B407)</span></h1>
       <p class="sub">מידע עודכן לפי תאריך: 01/11/2026, שעה 15:48</p>
       <p class="sub" id="avigailUpdated" style="margin-top:2px">דוחות אביגל (בלוסום) עודכנו: 01/11/2026, שעה 15:54 · התצוגה המקורית של אביגל: 28/09/2026</p>
       <div id="amsIndicator" onclick="document.getElementById('toggleAMS').click()" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;transition:.2s;background:#e6f9e6;border:1px solid #4caf50;color:#2e7d32;direction:ltr" title="לחץ לשינוי — מקושר ללחצן סינון חטיבות בהגדרות">
@@ -576,11 +598,11 @@ body.stats-empty .hero-band,body.avigail-on .hero-band{background:none;border:no
         <button class="sidetab side-child" data-tab="roles" onclick="activateTab('roles')"><span class="tab-icon">🧑‍🔧</span><span class="tab-label">לפי תפקיד</span></button>
       </div>
     </div>
-    <div class="side-group" id="qGroup"><!-- B403: "שאילתות" sub-menu -->
-      <button class="sidetab side-parent" data-tab="queries" onclick="toggleQGroup()" aria-expanded="false"><span class="tab-icon">🔎</span><span class="tab-label">שאילתות</span><span class="side-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 12 15 17 10"/></svg></span></button>
+    <div class="side-group open" id="qGroup"><!-- B407: "שאילתות" — one search field under the tab name -->
+      <button class="sidetab side-parent" data-tab="queries" onclick="toggleQGroup()"><span class="tab-icon">🔎</span><span class="tab-label">שאילתות</span></button>
       <div class="side-children" id="qSideChildren">
-        <button class="sidetab side-child" data-q="emp" onclick="pickQSide('emp')"><span class="tab-icon">👤</span><span class="tab-label">שאילתה לעובד</span></button>
-        <button class="sidetab side-child" data-q="comp" onclick="pickQSide('comp')"><span class="tab-icon">📋</span><span class="tab-label">שאילתה לכשירות</span></button>
+        <div class="q-side-search"><input id="qSideInput" type="search" autocomplete="off" placeholder="עובד, מספר עובד או כשירות…" oninput="qSideInput(this.value)" onfocus="qSideInput(this.value)" onkeydown="qSideKey(event)" onblur="setTimeout(function(){qSideInput('')},200)"></div>
+        <div id="qSideSug" class="q-side-sug" style="display:none"></div>
       </div>
     </div>
     <div class="sidebar-sep" role="separator"></div>
@@ -911,6 +933,7 @@ body.stats-empty .hero-band,body.avigail-on .hero-band{background:none;border:no
         <table style="width:100%;border-collapse:collapse;font-size:13px">
           <thead><tr style="background:#f0f0f0;text-align:right"><th style="padding:8px 12px;border-bottom:2px solid #ddd">גרסה</th><th style="padding:8px 12px;border-bottom:2px solid #ddd">תאריך</th><th style="padding:8px 12px;border-bottom:2px solid #ddd">שינויים</th></tr></thead>
           <tbody>
+            <tr style="border-bottom:1px solid #eee"><td style="padding:8px 12px;font-weight:700">B407</td><td style="padding:8px 12px">02/11/2026</td><td style="padding:8px 12px">שאילתות: שתי השאילתות אוחדו לשדה חיפוש אחד מתחת לשם הלשונית בתפריט הצד (עובד, מספר עובד או כשירות, עם תוצאות מחולקות לעובדים ולכשירויות); כל תשובה נפתחת כלשונית נפרדת עם סגירה ×, ומעבר מכשירות לכרטיס עובד פותח לשונית חדשה</td></tr>
             <tr style="border-bottom:1px solid #eee"><td style="padding:8px 12px;font-weight:700">B406</td><td style="padding:8px 12px">02/11/2026</td><td style="padding:8px 12px">עובדים חדשים: ייצוא לאקסל ושליחת האקסל כקובץ מצורף למייל — בראש הלשונית (כל החטיבות) ובכל כרטיס חטיבה; הקובץ לפי התצוגה הנבחרת (מבט על / הדרכת עובד חדש / טופס 1) וסליידר החודשים</td></tr>
             <tr style="border-bottom:1px solid #eee"><td style="padding:8px 12px;font-weight:700">B405</td><td style="padding:8px 12px">02/11/2026</td><td style="padding:8px 12px">שאילתות: תת-לשונית חדשה 📋 שאילתה לכשירות — בוחרים כשירות (Datwise: הדרכות, קרא וחתום, מינויים, סקרי סיכונים, בדיקות תעסוקתיות; בלוסום: הדרכות שנתיות, כשירות מקצועית, בדיקות ראייה) ומקבלים מי ביצע, מי חסר, תוקפים מתקרבים ופילוח לפי מנהל/חטיבה/מחלקה, סינון לפי חטיבה, מעבר לכרטיס העובד בלחיצה, אקסל ומייל חוסרים</td></tr>
             <tr style="border-bottom:1px solid #eee"><td style="padding:8px 12px;font-weight:700">B404</td><td style="padding:8px 12px">01/11/2026</td><td style="padding:8px 12px">שאילתה לעובד: אירועי בטיחות מוצגים רק כשהעובד מצוין באירוע עצמו (שדה משאבי אנוש ב-Datwise, לפי מספר עובד), כולל קוד אירוע ואיבר נפגע; נתוני האירועים נטענים כעת גם עם העובדים המעורבים</td></tr>
@@ -8362,7 +8385,7 @@ var CAT_TIPS={
     bind(document.querySelector('#schedSideChildren [data-sched="weekly"]'),function(){return '<p><b>תכנון אוטומטי לפי נוכחות:</b> הדאשבורד מציע תוכנית לשבוע הקרוב, בין 10:00 ל-14:00, עד 2 הדרכות ביום.</p><p>סדר ההדרכות נקבע לפי מספר העובדים הנוכחים השבוע שחסרה להם כל הדרכה, מהגדול לקטן.</p><p>נושאים שלא נכנסו עוברים לשבוע הבא, ויש רשימה של מנהלים שנדרשת פעולתם השבוע.</p>';});
     bindLive('#catSideChildren [data-cat="חתימות על סקרי סיכונים"]',function(){return '<p><b>📋 סקרי סיכונים</b> — בלשונית 📝 פערי כשירויות בטיחות, ליד הדרכות, קרא וחתום ומינויים. על הלחצן עצמו רואים כמה חתמו מתוך כמה ואת אחוז ההשלמה. הלשונית מוצגת תמיד, גם כשכולם חתמו.</p><ul style="margin:0;padding-right:18px"><li><b>שורת הסיכום:</b> &quot;הושלם X מתוך Y&quot;, כמה ✓ חתמו, כמה ✗ לא חתמו ומספר הסקרים.</li><li><b>כרטיס לכל סקר</b> (שם הסקר המלא, מחלקה וחטיבה) עם &quot;הושלם X מתוך Y · חתמו · לא חתמו&quot;.</li><li>לחיצה על הכרטיס פותחת את הפירוט: מי שלא חתם מסומן באדום עם ✗, ורשימת <b>✅ חתמו על הסקר</b> מופיעה פתוחה, עם שם ותאריך.</li><li>הלחצן <b>✅ חתמו (N)</b> מסתיר או מציג את רשימת החותמים. 📊 אקסל מייצא את הסקר.</li><li>המקור: קטגוריית &quot;חתימות על סקרי סיכונים&quot; בדוח הכשירויות של Datwise. מופיעים רק העובדים ש-Datwise משייך לכל סקר.</li></ul>';});
     bindLive('#catSideChildren [data-cat="__guests"]',function(){return '<p><b>🧳 הדרכת אורחים</b> — הנתונים נמשכים מ-Datwise (כשירויות, נושא &quot;הדרכת אורחים&quot;, כל המפגשים שבוצעו, כל הסטטוסים) ומחולקים לפי הסטטוס של האדם היום:</p><ul style="margin:0;padding-right:18px"><li><b>🧳 אורחים</b> — כל מי שבסטטוס אורח/ת <b>או לא פעיל/ה</b> (עמודת &quot;סטטוס ב-Datwise&quot; מראה מה). לכל אחד תאריך ההדרכה, תוקף עד, ומצב: ✓ בתוקף / ✗ פג תוקף / ✗ נכשל.</li><li><b>✅ מועמדים שנקלטו</b> — עברו את הדרכת האורחים ועברו לסטטוס פעיל/ה: חטיבה, מחלקה, מנהל ותאריך תחילת עבודה.</li><li>בצד שמאל של פס המדדים: <b>כמה ביצעו הדרכת אורחים היום, אתמול ושלשום</b> (עם התאריכים).</li><li>פס המדדים מראה את אחוז האורחים בתוקף, כמה פג תוקפם (באדום), כמה מהאורחים לא פעילים, ואת מספר המועמדים שנקלטו. יש חיפוש ו-📊 ייצוא לאקסל לכל רשימה.</li></ul>';});
-    bind(document.querySelector('#qGroup > .side-parent'),function(){return '<p><b>🔎 שאילתות</b> — חיפוש ושליפת מידע ממוקדת.</p><ul style="margin:0;padding-right:18px"><li><b>👤 שאילתה לעובד:</b> מקלידים שם או מספר עובד ומקבלים כרטיס מלא — פרטים ארגוניים, פערי כשירויות ומה בוצע, תוקפים מתקרבים, רפואה תעסוקתית, הדרכות בלוסום, כשירות מקצועית, דרישות עמדה, ציוד מגן ואירועי בטיחות שהעובד מצוין בהם.</li><li><b>📋 שאילתה לכשירות:</b> בוחרים הדרכה/כשירות ומקבלים מי ביצע, מי חסר, תוקפים מתקרבים ופילוח לפי מנהל, חטיבה ומחלקה.</li><li>📊 אקסל ו-📧 מייל מתוך כל שאילתה.</li></ul>';});
+    bind(document.querySelector('#qGroup > .side-parent'),function(){return '<p><b>🔎 שאילתות</b> — שדה חיפוש אחד מתחת לשם הלשונית.</p><ul style="margin:0;padding-right:18px"><li>מקלידים <b>שם עובד</b>, <b>מספר עובד</b> או <b>שם של הדרכה / כשירות</b> — התוצאות מחולקות ל-👤 עובדים ו-📋 כשירויות.</li><li>כל תשובה נפתחת כ<b>לשונית</b> בראש המסך; אפשר לפתוח כמה, לעבור ביניהן ולסגור עם ×.</li><li>📊 אקסל ו-📧 מייל בתוך כל תשובה.</li></ul>';});
     bind(document.querySelector('#neGroup > .side-parent'),function(){return '<p><b>🆕 עובדים חדשים</b> — 🔭 מבט על (כל החוסרים), 🎓 הדרכת עובד חדש, 📋 טופס 1 — עם מספר החסרים.</p><ul style="margin:0;padding-right:18px"><li>סליידר החודשים מופיע רק ב&quot;מבט על&quot;, ושם יש גם עיגול של העובדים החדשים לפי חטיבה (לחיצה פותחת את החטיבה).</li><li>בהדרכת עובד חדש ובטופס 1 מוצגים כל העובדים החדשים.</li><li>לחצן הדוח מופיע רק בתצוגה המתאימה: &quot;דוח - חסרי הדרכת עובד חדש&quot; בהדרכת עובד חדש, &quot;דוח - חסרי טופס 1&quot; בטופס 1 (במבט על אין לחצני דוח).</li></ul>';});
     bind(document.querySelector('#btSideChildren [data-bt="tests"]'),function(){return '<p><b>🩺 בדיקות תעסוקתיות</b></p><ul style="margin:0;padding-right:18px"><li>תתי-לשוניות לפי קופת חולים: הכל, כללית, מכבי, לאומית, מאוחדת.</li><li>לכל עובד: שם, מספר עובד, מנהל, קופת חולים, תאריך קליטה וזמן מאז הקליטה.</li><li>שתי תצוגות: &quot;לפי חודשים&quot; ו&quot;רשימת עובדים&quot;.</li><li><b>✉ מייל לכל המנהלים</b>, <b>📊 אקסל</b> ו-<b>PDF</b>.</li><li>הבדיקות התעסוקתיות לא נכללות באחוז ההשלמה הכללי של הדאשבורד.</li></ul>';});
     bind(document.querySelector('#btSideChildren [data-bt="vision"]'),function(){return '<p><b>👁️ בדיקות ראייה</b></p><ul style="margin:0;padding-right:18px"><li>בדיקות ראייה שנתיות לעובדים, מתוך דוח ההכשרות של Datwise.</li><li><b>כרטיסי סיכום:</b> עובדים הנדרשים לבדיקה, הושלם, לא הושלם, פג תוקף ואחוז השלמה.</li><li><b>סינון לפי סטטוס</b> (הכל, לא הושלם, פג תוקף, הושלם), <b>סינון לפי חטיבה</b> ו<b>חיפוש</b> לפי שם, מספר עובד, מנהל, מחלקה או תפקיד.</li><li>לכל עובד: חטיבה, מחלקה, מנהל, תפקיד, סטטוס, תאריך הבדיקה האחרונה, תאריך יעד והאם הוא נוכח היום.</li><li>ראשונים ברשימה: מי שפג להם התוקף, אחריהם מי שלא ביצע.</li><li><b>✉ מייל למנהלים (חסרים)</b> ו-<b>📊 אקסל</b>.</li><li>הנתונים מתעדכנים כשמתקבל קובץ הכשרות חדש.</li></ul>';});
@@ -8731,6 +8754,70 @@ function neMailFallback(x,subj,body){
   setTimeout(function(){ location.href='mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body); },400);
   neToast('📎 <b>קובץ האקסל ירד לתיקיית ההורדות</b> ('+x.fn+').<br>נפתח חלון מייל חדש — גררו אליו את הקובץ (או לחצו על 📎 צירוף קובץ ובחרו אותו מהורדות).');
 }
+</script>
+
+<script>
+/* B407: שאילתות — שדה חיפוש אחד (עובדים + כשירויות) מתחת לשם הלשונית בתפריט הצד; כל תשובה נפתחת כלשונית */
+var Q_TABS=[], qActive=-1;
+function qSideMatches(v){
+  v=String(v||'').trim(); if(!v) return {e:[],c:[]};
+  var lv=v.toLowerCase(), dn=qN(v), isNum=/^\d+$/.test(v);
+  var e=qIndex().filter(function(x){ return x.name.indexOf(v)>=0||(isNum&&x.eid.indexOf(dn)===0); }).slice(0,8);
+  var c=isNum?[]:qcIndex().filter(function(x){ return x.name.toLowerCase().indexOf(lv)>=0||x.cat.toLowerCase().indexOf(lv)>=0; }).slice(0,10);
+  return {e:e,c:c};
+}
+function qSideInput(v){
+  var box=document.getElementById('qSideSug'); if(!box) return;
+  if(!String(v||'').trim()){ box.innerHTML=''; box.style.display='none'; return; }
+  var m=qSideMatches(v), h='';
+  var row=function(js,icon,title,meta){ return '<div class="q-side-row" onmousedown="event.preventDefault();'+js+'"><span class="qi">'+icon+'</span><span class="qt"><b>'+qH(title)+'</b><small>'+qH(meta)+'</small></span></div>'; };
+  if(m.e.length) h+='<div class="q-side-hd">👤 עובדים</div>'+m.e.map(function(x){ return row("qOpenTab('emp','"+x.eid+"')",'👤',x.name,'#'+x.eid+(x.dept?' · '+x.dept:'')); }).join('');
+  if(m.c.length) h+='<div class="q-side-hd">📋 כשירויות</div>'+m.c.map(function(x){ return row("qOpenTab('comp',decodeURIComponent('"+encodeURIComponent(x.key).replace(/'/g,'%27')+"'))",x.icon,x.name,x.cat+' · '+x.src); }).join('');
+  if(!h) h='<div class="q-side-hd" style="font-weight:500">לא נמצאו תוצאות</div>';
+  box.innerHTML=h; box.style.display='block';
+}
+function qSideKey(ev){
+  if(ev.key==='Enter'){ var m=qSideMatches(ev.target.value); if(m.e.length) qOpenTab('emp',m.e[0].eid); else if(m.c.length) qOpenTab('comp',m.c[0].key); }
+  else if(ev.key==='Escape'){ ev.target.value=''; qSideInput(''); ev.target.blur(); }
+}
+function qOpenTab(type,key){
+  var label, icon;
+  if(type==='emp'){ var e=qFind(key); if(!e) return; key=e.eid; label=e.name; icon='👤'; }
+  else { var c=qcGet(key); if(!c) return; label=c.name; icon=c.icon; }
+  var i=-1; Q_TABS.forEach(function(t,j){ if(t.type===type&&t.key===key) i=j; });
+  if(i<0){ Q_TABS.push({type:type,key:key,label:label,icon:icon}); if(Q_TABS.length>10) Q_TABS.shift(); i=Q_TABS.length-1; }
+  qActive=i;
+  var inp=document.getElementById('qSideInput'); if(inp){ inp.value=''; inp.blur(); } qSideInput('');
+  if(!document.getElementById('tab-queries').classList.contains('active')) activateTab('queries'); else renderQueries();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function qSelTab(i){ qActive=i; renderQueries(); }
+function qCloseTab(i,ev){ if(ev) ev.stopPropagation(); Q_TABS.splice(i,1); if(qActive>=Q_TABS.length) qActive=Q_TABS.length-1; else if(i<qActive) qActive--; renderQueries(); }
+function qCloseAll(){ Q_TABS=[]; qActive=-1; renderQueries(); }
+function toggleQGroup(force){
+  var g=document.getElementById('qGroup'); if(!g) return;
+  if(force===false) return; /* השדה תמיד פתוח מתחת לשם הלשונית */
+  g.classList.add('open');
+  if(typeof force!=='boolean'){ var i=document.getElementById('qSideInput'); if(i) setTimeout(function(){ i.focus(); },30); if(Q_TABS.length&&!document.getElementById('tab-queries').classList.contains('active')) activateTab('queries'); }
+}
+function markQSide(){}
+function qcOpenEmp(eid){ qOpenTab('emp',eid); }
+function renderQueries(){
+  var el=document.getElementById('qContent'); if(!el) return;
+  var strip='';
+  if(Q_TABS.length){
+    strip='<div class="q-tabs">'+Q_TABS.map(function(t,i){ return '<div class="q-tab'+(i===qActive?' on':'')+'" onclick="qSelTab('+i+')" title="'+qH(t.label)+'"><span>'+t.icon+'</span><span class="ql">'+qH(t.label)+'</span><button onclick="qCloseTab('+i+',event)" title="סגירת הלשונית" aria-label="סגירה">×</button></div>'; }).join('')+
+      (Q_TABS.length>1?'<button class="q-tab-all" onclick="qCloseAll()" title="סגירת כל הלשוניות">סגירת הכל</button>':'')+'</div>';
+  }
+  var t=Q_TABS[qActive];
+  if(!t){ el.innerHTML='<div style="font-weight:800;font-size:20px;color:var(--text);margin-bottom:10px">🔎 שאילתות</div><div class="card" style="padding:28px;text-align:center;color:var(--muted);font-size:15px;line-height:1.7">🔍 מקלידים בשדה החיפוש שבתפריט הצד, מתחת ל<b>"שאילתות"</b>, שם עובד, מספר עובד או שם של הדרכה / כשירות.<br>כל תשובה נפתחת כאן כלשונית נפרדת — אפשר לפתוח כמה ולעבור ביניהן.</div>'; return; }
+  el.innerHTML=strip+'<div id="qResult"></div><div id="qcResult"></div>';
+  if(t.type==='emp'){ qSection='emp'; qEid=t.key; qShow(t.key); }
+  else { qSection='comp'; if(qcKey!==t.key){ qcTab='miss'; qcDiv='הכל'; } qcKey=t.key; qcShow(); }
+}
+document.addEventListener('focusin',function(e){ if(e.target&&e.target.id==='qSideInput'){ var sb=e.target.closest('.sidebar'); if(sb) sb.classList.remove('force-closed'); } });
+document.addEventListener('DOMContentLoaded',function(){ var g=document.getElementById('qGroup'); if(g) g.classList.add('open'); });
+(function(){ var g=document.getElementById('qGroup'); if(g) g.classList.add('open'); })();
 </script>
 
 </body></html>
