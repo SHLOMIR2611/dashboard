@@ -50,11 +50,12 @@ try:
     if not n: s=s.replace('const KUPA_MAP = ',new+'\nconst KUPA_MAP = ',1)
     open(P,'w',encoding='utf-8').write(s); print('gender',len(G))
 except Exception as ex: print('gender skip',ex)
-# B437: EMP_ATTR {eid -> [age band, sector]} from the HR export (no birth dates are stored — only the age band at bake time)
+# B437/B438: EMP_ATTR {eid -> [age band, sector, professional manager, [secondary roles], contractor, company]} from the HR export (no birth dates are stored — only the age band at bake time)
 try:
     import openpyxl, datetime as _dt
     ws=openpyxl.load_workbook(HR,read_only=True).active; it=ws.iter_rows(values_only=True); H=[str(x or '').strip() for x in next(it)]
     ie,ib,isc=H.index('מספר עובד/ת'),H.index('תאריך לידה'),H.index('סקטור')
+    ipm=H.index('מנהל מקצועי'); ir=[H.index(c) for c in ('תפקיד משני 1','תפקיד משני 2','תפקיד משני 3') if c in H]; ic=H.index('חברת שירות / קבלן'); ico=H.index('חברה')
     today=_dt.date.today(); A={}
     def band(a):
         return 'עד 24' if a<25 else '25–34' if a<35 else '35–44' if a<45 else '45–54' if a<55 else '55–64' if a<65 else '65+'
@@ -67,7 +68,9 @@ try:
             if 14<=age<=95: b=band(age)
         except Exception: pass
         sc=str(r[isc] or '').strip()
-        if b or sc: A[e]=[b,sc]
+        g=lambda i:str(r[i] or '').strip()
+        r2=[];[r2.append(g(i)) for i in ir if g(i) and g(i) not in r2]
+        A[e]=[b,sc,g(ipm),r2,g(ic),g(ico)]
     s=open(P,encoding='utf-8').read(); new='const EMP_ATTR = '+json.dumps(A,ensure_ascii=False,separators=(',',':'))+';'
     s,n=re.subn(r'const EMP_ATTR = \{.*?\};',lambda m:new,s,count=1,flags=re.S)
     if not n: s=s.replace('const KUPA_MAP = ',new+'\nconst KUPA_MAP = ',1)
