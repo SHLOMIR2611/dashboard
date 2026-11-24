@@ -37,3 +37,39 @@ s,c=re.subn(r'מידע עודכן לפי תאריך: \d\d/\d\d/\d{4}(, שעה \d
 open(P,'w',encoding='utf-8').write(s)
 ST=json.loads(vals['ST'])
 print(json.dumps({'hdr':c,'errs':errs,'employees':ST.get('total_employees'),'present':ST.get('present_today'),'completion':ST.get('overall_completion'),'missing':ST.get('total_missing'),'events':len(json.loads(vals['EVENTS']))},ensure_ascii=False))
+# B437: GENDER_MAP {eid -> 'זכר'/'נקבה'} from the HR export's "מין" column (for שאילתות search by gender)
+try:
+    import openpyxl
+    ws=openpyxl.load_workbook(HR,read_only=True).active; it=ws.iter_rows(values_only=True); H=[str(x or '').strip() for x in next(it)]
+    ie,ig=H.index('מספר עובד/ת'),H.index('מין'); G={}
+    for r in it:
+        e=str(r[ie] or '').strip().lstrip('0'); g=str(r[ig] or '').strip()
+        if e and g in ('זכר','נקבה'): G[e]=g
+    s=open(P,encoding='utf-8').read(); new='const GENDER_MAP = '+json.dumps(G,ensure_ascii=False,separators=(',',':'))+';'
+    s,n=re.subn(r'const GENDER_MAP = \{.*?\};',lambda m:new,s,count=1,flags=re.S)
+    if not n: s=s.replace('const KUPA_MAP = ',new+'\nconst KUPA_MAP = ',1)
+    open(P,'w',encoding='utf-8').write(s); print('gender',len(G))
+except Exception as ex: print('gender skip',ex)
+# B437: EMP_ATTR {eid -> [age band, sector]} from the HR export (no birth dates are stored — only the age band at bake time)
+try:
+    import openpyxl, datetime as _dt
+    ws=openpyxl.load_workbook(HR,read_only=True).active; it=ws.iter_rows(values_only=True); H=[str(x or '').strip() for x in next(it)]
+    ie,ib,isc=H.index('מספר עובד/ת'),H.index('תאריך לידה'),H.index('סקטור')
+    today=_dt.date.today(); A={}
+    def band(a):
+        return 'עד 24' if a<25 else '25–34' if a<35 else '35–44' if a<45 else '45–54' if a<55 else '55–64' if a<65 else '65+'
+    for r in it:
+        e=str(r[ie] or '').strip().lstrip('0')
+        if not e: continue
+        b=''; d=str(r[ib] or '').strip()
+        try:
+            dd=_dt.datetime.strptime(d,'%d/%m/%Y').date(); age=today.year-dd.year-((today.month,today.day)<(dd.month,dd.day))
+            if 14<=age<=95: b=band(age)
+        except Exception: pass
+        sc=str(r[isc] or '').strip()
+        if b or sc: A[e]=[b,sc]
+    s=open(P,encoding='utf-8').read(); new='const EMP_ATTR = '+json.dumps(A,ensure_ascii=False,separators=(',',':'))+';'
+    s,n=re.subn(r'const EMP_ATTR = \{.*?\};',lambda m:new,s,count=1,flags=re.S)
+    if not n: s=s.replace('const KUPA_MAP = ',new+'\nconst KUPA_MAP = ',1)
+    open(P,'w',encoding='utf-8').write(s); print('attr',len(A))
+except Exception as ex: print('attr skip',ex)
