@@ -4,6 +4,39 @@ Updates the consts below + the 'מידע עודכן לפי תאריך' header. D
 import json,re,sys,asyncio
 from playwright.async_api import async_playwright
 P,HR,COMP,EV,DATE,TIME=sys.argv[1:7]
+# B448: Datwise's HR export sometimes ignores the "סטטוס: פעיל/ה" filter and returns every status
+# (פעיל/ה + לא פעיל/ה + אורח/ת). Keep only active rows by editing the sheet XML in place
+# (no openpyxl rewrite, so the native Hebrew headers stay intact for the page parser).
+def hr_active_only(path):
+    import zipfile,tempfile,os
+    z=zipfile.ZipFile(path); names=z.namelist()
+    ss=[re.sub('<[^>]+>','',x) for x in re.findall(r'<si>(.*?)</si>',z.read('xl/sharedStrings.xml').decode('utf8'),re.S)] if 'xl/sharedStrings.xml' in names else []
+    sh=z.read('xl/worksheets/sheet1.xml').decode('utf8')
+    rows=re.findall(r'<row[^>]*>.*?</row>',sh,re.S)
+    if not rows: return path
+    def cells(r): return {re.match(r'[A-Z]+',m.group(1)).group(0):m.group(0) for m in re.finditer(r'<c r="([A-Z]+\d+)"[^>]*?(?:/>|>.*?</c>)',r,re.S)}
+    def val(c):
+        v=re.search(r'<v>(.*?)</v>',c,re.S)
+        if v: return ss[int(v.group(1))] if 't="s"' in c and ss else v.group(1)
+        t=re.search(r'<t[^>]*>(.*?)</t>',c,re.S); return t.group(1) if t else ''
+    hdr={k:val(c).strip() for k,c in cells(rows[0]).items()}
+    col=next((k for k,v in hdr.items() if v=='סטטוס'),None)
+    if not col: return path
+    keep=[rows[0]]; drop=0
+    for r in rows[1:]:
+        c=cells(r).get(col); st=val(c).strip() if c else ''
+        if st in ('','פעיל/ה','פעיל'): keep.append(r)
+        else: drop+=1
+    if not drop: return path
+    i0=sh.index(rows[0]); i1=sh.index(rows[-1])+len(rows[-1])
+    sh2=sh[:i0]+''.join(keep)+sh[i1:]
+    sh2=re.sub(r'<dimension ref="[^"]*"/>','',sh2)
+    fd,out=tempfile.mkstemp(suffix='.xlsx'); os.close(fd)
+    with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as w:
+        for n in names: w.writestr(n, sh2.encode('utf8') if n=='xl/worksheets/sheet1.xml' else z.read(n))
+    print('hr: kept',len(keep)-1,'active rows, dropped',drop,'non-active')
+    return out
+HR=hr_active_only(HR)
 NAMES=['CD_DONE','CD_DONE_LIST','UPCOMING','AT','ST','EMP_START_DATES','CD','MD','BT','FIRSTAID','EVENTS','EVENTS_BY_TYPE','EVENTS_MONTHLY','EVENTS_DIV','EVENTS_STATS']
 async def main():
     async with async_playwright() as p:
