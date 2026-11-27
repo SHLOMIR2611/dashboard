@@ -14,7 +14,7 @@ with zipfile.ZipFile(buf,'w',zipfile.ZIP_DEFLATED) as z:
     for full,arc in files: z.write(full,arc)
 b64=base64.b64encode(buf.getvalue()).decode()
 s=open(P,encoding='utf-8').read()
-ver=re.search(r'<span style="font-size:12px;font-weight:400;color:#999">\((B?\d+)\)</span>',s).group(1)
+ver=re.search(r'<span style="font-size:12px;font-weight:400;color:#999">\(([A-Z]?\d+)\)</span>',s).group(1)
 d=DW.split()[0]; zipname='קבצי_מקור_'+d.replace('/','-')+'.zip'
 s,k=re.subn(r'(?:var|const) SOURCE_ZIP_B64\s*=\s*"[^"]*";(?:\s*var SOURCE_ZIP_NAME\s*=\s*"[^"]*";)?',lambda m:'var SOURCE_ZIP_B64="'+b64+'"; var SOURCE_ZIP_NAME="'+zipname+'";',s,count=1); assert k==1
 s=s.replace("a.download='source_07-08-2026.zip';","a.download=(typeof SOURCE_ZIP_NAME!=='undefined'&&SOURCE_ZIP_NAME)||'source.zip';")
